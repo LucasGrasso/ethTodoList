@@ -4,6 +4,14 @@
     font-family: sans-serif;
 }
 
+body {
+    background: #181820;
+}
+
+.navbar {
+    background: var(--color);
+}
+
 .navbar-brand {
     color: white;
     font-size: 1.2rem;
@@ -13,15 +21,114 @@
 
 ul {
     margin-bottom: 0px;
-  }
+}
 
-  #completedTaskList .content {
+#completedTaskList .content {
     color: grey;
     text-decoration: line-through;
-  }
+}
 
-  form {
-    width: 350px;
-    margin-top: 60px;
-    margin-bottom: 10px;
-  }
+#content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 60%;
+    padding: 10px;
+    border: 1px solid rgb(80, 80, 80);
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.form-container input {
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    background-color: transparent;
+    caret-color: white;
+    color: white;
+}
+
+.form-container input:focus {
+    outline: none;
+}
+
+.add-container {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    padding: 3px;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: var(--color-simple);
+}
+
+#listaTareas, #tareasCompletadas {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#tareasCompletadas .content {
+    color: grey;
+    text-decoration: line-through;
+}
+
+.taskTemplate {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 15px 15px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #2d2d36;
+}
+
+.taskTemplate .content {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.taskTemplate input {
+    height: 25px;
+    width: 25px;
+    appearance: none;
+    background-color: transparent;
+    border: 3px solid var(--color-simple);
+    border-radius: 10px;
+}
+
+.taskTemplate input:checked {
+    position: relative;
+    background: var(--color-simple);
+    border: none;
+    height: 25px;
+    width: 25px;
+}
+
+.taskTemplate input:checked::before {
+    content: '\f00c';
+    position: absolute;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    font: var(--fa-font-solid);
+    font-size: 1rem;
+    color: var(--text-color);
+}

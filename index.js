@@ -1,233 +1,125 @@
-var todoListABI = [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "completado",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_contenido",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "crearTarea",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "addr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "completado",
-				"type": "bool"
-			}
-		],
-		"name": "tareaCompletada",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "addr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "content",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "completado",
-				"type": "bool"
-			}
-		],
-		"name": "tareaCreada",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "contTareas",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "tareas",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "content",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "completado",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
-
 if (typeof web3 !== "undefined") {
-    web3 = new Web3(ethereum);
+	web3 = new Web3(ethereum);
 } else {
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545/%22"));
+	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545/%22"));
 }
 
-var todoListAddress = "0xEa6Dd11D42350a567065d593a16eee1298B1c490";
+var todoListAddress = "0xd18d9450aE7A1cbdfe04914F508f47b66010416C";
 let todoList = new web3.eth.Contract(todoListABI, todoListAddress);
+let list = [];
 
 ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
-    document.querySelector(".navbar-brand").innerHTML = accounts[0];
-        let options = {
-            filter: {
-                value: [],
-            },
-            fromBlock: 0,
-        };
+	let a = ""
+	for (let i = 0; i < 6; i++) {
+		a += `#${accounts[0].slice(2 + (6 * i), 8 + (6 * i))},`;
+		list.push(`#${accounts[0].slice(2 + (6 * i), 8 + (6 * i))}`)
+	}
+	document.body.style.setProperty("--color", `linear-gradient(90deg, ${a.slice(0, -1)})`);
+	document.body.style.setProperty("--color-simple",`#${accounts[0].slice(2 , 8)}`);
+	document.querySelector(".navbar-brand").innerHTML = accounts[0];
+	let options = {
+		filter: {
+			value: [],
+		},
+		fromBlock: "latest",
+	};
 
-        todoList.events
-            .allEvents(options)
-            .on("data", (event) => console.log("event", event))
-            .on("changed", (changed) => console.log("changed", changed))
-            .on("error", (err) => console.log("err", err))
-            .on("connected", (str) => console.log("connected", str));
-    });
+	todoList.events
+		.allEvents(options)
+		.on("data", (event) => console.log("event", event))
+		.on("changed", (changed) => console.log("changed", changed))
+		.on("error", (err) => console.log("err", err))
+		.on("connected", (str) => console.log("connected", str));
+});
 
-function crearTarea(){
-    todoList.methods.crearTarea($('#nuevaTarea').val(), ethereum.selectedAddress).send({ from: ethereum.selectedAddress});
-	window.location.reload();
+async function crearTarea() {
+	let options = {
+		filter: {
+			value: [],
+		},
+		fromBlock: "latest",
+	};
+
+	todoList.events.tareaCreada(options).on("data", (event) => {
+		//console.log("ev", event);
+		document.querySelector("#listaTareas").innerHTML = "";
+		document.querySelector("#tareasCompletadas").innerHTML = "";
+		renderTareas();
+	})
+	//console.log(ethereum.selectedAddress)
+	todoList.methods.crearTarea($('#nuevaTarea').val(), ethereum.selectedAddress).send({ from: ethereum.selectedAddress });
+	document.querySelector(".form-container").reset();
+
 }
 
-function completarTarea(_addr,_id){
-    todoList.methods.completado(_id,_addr).send({ from: _addr});
+async function completarTarea(_addr, _id) {
+	todoList.methods.completado(parseInt(_id), _addr).send({ from: _addr });
+
+	let options = {
+		filter: {
+			value: [],
+		},
+		fromBlock: "latest",
+	};
+	todoList.events.tareaCompletada(options).on("data", (event) => {
+		//console.log("ev", event);
+		document.querySelector("#listaTareas").innerHTML = "";
+		document.querySelector("#tareasCompletadas").innerHTML = "";
+		renderTareas();
+	})
 }
 
-async function getContTareas(_addr){
-    todoList.methods.contTareas(_addr).call()
-    .then(function(result) {
-        console.log(result);
-        return result;
-    });
+async function getContTareas(_addr) {
+	const result = await todoList.methods.contTareas(_addr).call()
+	return result;
 }
 
-async function getTarea(_addr,_id){
-    todoList.methods.tareas(_addr,_id).call()
-    .then(function(result) {
-        console.log(result);
-        return result;
-    });
-}
+const template = `<div class="taskTemplate" class="checkbox" style="display: none">
+<input type="checkbox" />
+<span class="content">Contenido va aca</span>
+</div>`
 
-async function renderTareas(){
+let templateEl = document.createElement("div");
+templateEl.innerHTML = template;
+templateEl = templateEl.firstChild;
+
+async function renderTareas() {
 	addr = ethereum.selectedAddress
-	let contTareas = getContTareas(addr)
-    const $taskTemplate = $('.taskTemplate')
+	let contTareas = await getContTareas(addr)
 
-    for (var i = 1; i <= contTareas; i++) {
-      // Fetch the task data from the blockchain
-		const tarea = todoList.methods.tareas(addr,i).call()
-		const Id = tarea[1].toNumber()
-		const contenido = task[2]
-		const status = task[3]
+	for (var i = 1; i <= contTareas; i++) {
+		const tarea = await todoList.methods.tareas(addr, i).call()
+		const Id = tarea.id
+		const contenido = tarea.content
+		const status = tarea.completado
 
-		const $newTaskTemplate = $taskTemplate.clone()
+		//console.log({ tarea, Id, contenido, status })
+
+		/* if (status) {
+			document.querySelector("#tareasCompletadas").appendChild(templateEl.cloneNode(true));
+		} else {
+			document.querySelector("#listaTareas").appendChild(templateEl.cloneNode(true));
+		} */
+
+		$newTaskTemplate = $(".taskTemplate").first().clone();
+		//console.log($newTaskTemplate.find("input")[0])
+		const color = list[Math.floor(Math.random() * 6)]
+		const brightness = tinycolor(color).getBrightness()
+		$newTaskTemplate.find("input")[0].style.setProperty("--color-simple", color);
+		$newTaskTemplate.find("input")[0].style.setProperty("--text-color", brightness > 128 ? "black" : "white");
 		$newTaskTemplate.find('.content').html(contenido)
 		$newTaskTemplate.find('input')
-						.prop('name', Id)
-						.prop('checked', status)
-						.on('click', completarTarea)
+			.prop('name', Id)
+			.prop('checked', status)
+			.on('click', () => completarTarea(addr, Id))
 
-      if (status) {
-        $('#tareasCompletadas').append($newTaskTemplate)
-      } else {
-        $('#listaTareas').append($newTaskTemplate)
-      }
+		if (status) {
+			$('#tareasCompletadas').append($newTaskTemplate)
+		} else {
+			$('#listaTareas').append($newTaskTemplate)
+		}
 
-      $newTaskTemplate.show()
+		$newTaskTemplate.show()
 	}
 }
 

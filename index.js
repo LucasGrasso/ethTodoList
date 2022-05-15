@@ -122,5 +122,6 @@ async function renderTareas() {
 		$newTaskTemplate.show()
 	}
 }
-
-renderTareas();
+window.onload = function(){ 
+    renderTareas();
+}

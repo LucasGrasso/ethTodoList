@@ -49,26 +49,24 @@ contract todoList{
         uint id
     );
 
-    function crearTarea(string memory _contenido, address _addr) public {
-        require(msg.sender == _addr);
-        contTareas[_addr]++;
-        tareas[_addr][contTareas[_addr]] = Tarea(contTareas[_addr],_contenido,false);
-        emit tareaCreada(_addr,contTareas[_addr], _contenido, false);
+    function crearTarea(string memory _contenido) public {
+        contTareas[msg.sender]++;
+        tareas[msg.sender][contTareas[msg.sender]] = Tarea(contTareas[msg.sender],_contenido,false);
+        emit tareaCreada(msg.sender,contTareas[msg.sender], _contenido, false);
     }
     
-    function completado(uint _id, address _addr) public {
-        require(msg.sender == _addr);
-        Tarea memory _tarea = tareas[_addr][_id];
+    function completado(uint _id) public {
+        Tarea memory _tarea = tareas[msg.sender][_id];
         _tarea.completado = !_tarea.completado;
-        tareas[_addr][_id] = _tarea;
-        emit tareaCompletada(_addr,_id, _tarea.completado);
+        tareas[msg.sender][_id] = _tarea;
+        emit tareaCompletada(msg.sender,_id, _tarea.completado);
   }
 
-  function eliminar(uint _id, address _addr) public onlyOwner{
-       Tarea memory _tarea = tareas[_addr][_id];
+  function eliminar(uint _id) public {
+       Tarea memory _tarea = tareas[msg.sender][_id];
        _tarea.content = "";
        _tarea.completado = false;
-       tareas[_addr][_id] = _tarea;
-       emit tareaEliminada(_addr, _id);
+       tareas[msg.sender][_id] = _tarea;
+       emit tareaEliminada(msg.sender, _id);
   }
 }

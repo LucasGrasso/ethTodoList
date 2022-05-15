@@ -85,11 +85,6 @@ var todoListABI = [
 				"internalType": "uint256",
 				"name": "_id",
 				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
 			}
 		],
 		"name": "completado",
@@ -122,11 +117,6 @@ var todoListABI = [
 				"internalType": "string",
 				"name": "_contenido",
 				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
 			}
 		],
 		"name": "crearTarea",
@@ -140,11 +130,6 @@ var todoListABI = [
 				"internalType": "uint256",
 				"name": "_id",
 				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
 			}
 		],
 		"name": "eliminar",

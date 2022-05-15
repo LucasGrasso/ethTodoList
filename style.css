@@ -92,11 +92,19 @@ ul {
     flex-direction: row;
     gap: 10px;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding: 15px 15px;
     border-radius: 10px;
     box-sizing: border-box;
     background-color: #2d2d36;
+}
+
+.taskTemplate .left {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
 }
 
 .taskTemplate .content {
@@ -111,6 +119,7 @@ ul {
     background-color: transparent;
     border: 3px solid var(--color-simple);
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .taskTemplate input:checked {
@@ -131,4 +140,50 @@ ul {
     font: var(--fa-font-solid);
     font-size: 1rem;
     color: var(--text-color);
+}
+
+.taskTemplate .eliminar {
+    font: var(--fa-font-solid);
+    font-size: 1rem;
+    color: red;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#loading {
+	position: fixed;
+	height: 100%;
+	width: 100vw;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
+}
+.lds-dual-ring {
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+}
+.lds-dual-ring:after {
+	content: " ";
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin: 8px;
+	border-radius: 50%;
+	border: 6px solid var(--color-simple);
+	border-color: var(--color-simple) transparent var(--color-simple) transparent;
+	animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }

@@ -6,13 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eth-todoList</title>
+  <!--Lucas Grasso Ramos & Nicolas Halperin -->
   <link rel="icon" href="logo.ico">
   <script src="https://kit.fontawesome.com/b40ba6f926.js" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -37,19 +38,21 @@
         <input id="nuevaTarea" type="text" class="form-control" placeholder="Agregar tarea" required />
       </form>
       <ul id="listaTareas" class="list-unstyled">
-        <div class="taskTemplate" class="checkbox" style="display: none">
+      </ul>
+      <div class="taskTemplate" class="checkbox" style="display: none">
+        <div class="left">
           <input type="checkbox" />
           <span class="content">Contenido va aca</span>
         </div>
-      </ul>
-      <div class="taskTemplate" class="checkbox" style="display: none">
-        <input type="checkbox" />
-        <span class="content">Contenido va aca</span>
+        <button class="eliminar">&#xf1f8</button>
       </div>
       <ul id="tareasCompletadas" class="list-unstyled">
-        
+
       </ul>
     </div>
+  </div>
+  <div id="loading" style="display: none;">
+    <div class="lds-dual-ring"></div>
   </div>
 </body>
 

@@ -75,6 +75,7 @@ templateEl.innerHTML = template;
 templateEl = templateEl.firstChild;
 
 async function renderTareas() {
+	document.querySelector(".form-container").reset();
 	document.querySelector("#listaTareas").innerHTML = "";
 	document.querySelector("#tareasCompletadas").innerHTML = "";
 	let contTareas = await getContTareas(ethereum.selectedAddress)

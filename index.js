@@ -1,8 +1,4 @@
-if (typeof web3 !== "undefined") {
-	web3 = new Web3(ethereum);
-} else {
-	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545/%22"));
-}
+web3 = new Web3(ethereum);
 
 var todoListAddress = "0x9f976e4cbC777B124609d72786B6dAAE01F42a22";
 let todoList = new web3.eth.Contract(todoListABI, todoListAddress);

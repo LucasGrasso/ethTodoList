@@ -1,5 +1,5 @@
 ## ethTodoList
-* @authors: Nicolas Halperin, Lucas Grasso
+* @authors: [Nicolas Halperin](https://github.com/NicoHalpe), Lucas Grasso
 * @credits: DappUniversity
 ---
 Inspired from [@DappUniversity´s tutorial](https://github.com/dappuniversity/eth-todo-list)

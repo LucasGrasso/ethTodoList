@@ -6,6 +6,8 @@
 
 body {
     background: #181820;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 .navbar {
@@ -186,4 +188,14 @@ ul {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+a {
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
 }

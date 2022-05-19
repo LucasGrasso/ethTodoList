@@ -20,6 +20,33 @@ body {
     padding: 10px;
     font-family: 'Space Mono', monospace;
 }
+@media (max-width: 600px) {
+    .navbar-brand {
+        color: white;
+        font-size: 1rem;
+        padding: 10px;
+        font-family: 'Space Mono', monospace;
+        text-align: center;
+    }
+}
+@media (max-width: 450px) {
+    .navbar-brand {
+        color: white;
+        font-size: 0.8rem;
+        padding: 10px;
+        font-family: 'Space Mono', monospace;
+        text-align: center;
+    }
+}
+@media (max-width: 310px) {
+    .navbar-brand {
+        color: white;
+        font-size: 0.75rem;
+        padding: 10px;
+        font-family: 'Space Mono', monospace;
+        text-align: center;
+    }
+}
 
 ul {
     margin-bottom: 0px;
